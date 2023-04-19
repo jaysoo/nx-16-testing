@@ -17,7 +17,10 @@ Create UI library and stories + e2e:
 Serve all:
 ```
 ./shell
-./serve.sh
+./serve-start.sh
+
+# Stop all servers
+./serve-stop.sh
 ```
 
 Run lint/test/e2e:
