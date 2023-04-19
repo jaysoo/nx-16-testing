@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd tmp
+cd /tmp
 
 for dir in * ; do
   cd $dir
@@ -11,10 +11,7 @@ for dir in * ; do
     echo "Adding Storybook to Next.js workspace: $dir"
 
     # Determine style to use
-    style="unknown"
-    if [[ "$dir" =~ css$ ]]; then
-      style="css"
-    fi
+    style="css"
     if [[ "$dir" =~ less$ ]]; then
       style="less"
     fi
@@ -31,12 +28,21 @@ for dir in * ; do
       style="styled-jsx"
     fi
 
-    npx nx g @nrwl/react:component Message --project=demo --style=$style --export=false
-    npx nx g @nrwl/react:storybook-configuration demo --generateStories --no-interactive
+    npx nx g @nrwl/next:lib ui --style=$style --no-interactive --unitTestRunner=jest
+    npx nx g @nrwl/react:component Message --project=ui --style=$style --export=true
+    npx nx g @nrwl/react:storybook-configuration ui --generateStories --no-interactive
   else 
     echo "Adding Storybook to React workspace: $dir"
-    npx nx g @nrwl/react:component Message --export=false
-    npx nx g @nrwl/react:storybook-configuration $dir --generateStories --no-interactive
+
+    # Determine style to use
+    test_runner="jest"
+    if [[ "$dir" =~ vite$ ]]; then
+      test_runner="vitest"
+    fi
+
+    npx nx g @nrwl/react:lib ui --style=$style --no-interactive --unitTestRunner=$test_runner
+    npx nx g @nrwl/react:component Message --export=true --project=ui
+    npx nx g @nrwl/react:storybook-configuration ui --generateStories --no-interactive
   fi
 
   cd ..

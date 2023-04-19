@@ -1,5 +1,5 @@
 #!/bin/sh
-
+cd /tmp
 npx -y -q create-nx-workspace@15.9.2 react-vite --preset=react-standalone --style=css --no-nx-cloud --bundler=vite
 npx -y -q create-nx-workspace@15.9.2 react-webpack --preset=react-standalone --style=css --no-nx-cloud --bundler=webpack
 npx -y -q create-nx-workspace@15.9.2 next-css --preset=next --appName=demo --style=css --no-nx-cloud --bundler=webpack
