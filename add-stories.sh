@@ -1,6 +1,7 @@
 #!/bin/sh
+export $(cat .env | xargs)
 
-cd /tmp
+cd $TMP
 
 for dir in * ; do
   cd $dir
