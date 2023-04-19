@@ -8,6 +8,7 @@ ver="${1:-latest}"
 
 echo "Create workspaces with Nx $ver"
 
+npx -y -q create-nx-workspace@$ver node-fastify --preset=node-standalone --framework=fastify --no-nx-cloud --docker
 npx -y -q create-nx-workspace@$ver react-vite --preset=react-standalone --style=css --no-nx-cloud --bundler=vite
 npx -y -q create-nx-workspace@$ver react-webpack --preset=react-standalone --style=css --no-nx-cloud --bundler=webpack
 npx -y -q create-nx-workspace@$ver next-css --preset=next --appName=demo --style=css --no-nx-cloud --bundler=webpack

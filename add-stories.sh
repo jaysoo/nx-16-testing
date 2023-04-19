@@ -33,17 +33,20 @@ for dir in * ; do
     npx nx g @nrwl/react:component Message --project=ui --style=$style --export=true
     npx nx g @nrwl/react:storybook-configuration ui --generateStories --no-interactive
   else 
-    echo "Adding Storybook to React workspace: $dir"
+    react_version=$(cat package.json | jq ".dependencies.react ")
+    if [ "$react_version" != "null" ]; then
+      echo "Adding Storybook to React workspace: $dir"
 
-    # Determine style to use
-    test_runner="jest"
-    if [[ "$dir" =~ vite$ ]]; then
-      test_runner="vitest"
+      # Determine test runner to use
+      test_runner="jest"
+      if [[ "$dir" =~ vite$ ]]; then
+        test_runner="vitest"
+      fi
+
+      npx nx g @nrwl/react:lib ui --no-interactive --unitTestRunner=$test_runner --style=css
+      npx nx g @nrwl/react:component Message --export=true --project=ui --style=css
+      npx nx g @nrwl/react:storybook-configuration ui --generateStories --no-interactive
     fi
-
-    npx nx g @nrwl/react:lib ui --style=$style --no-interactive --unitTestRunner=$test_runner
-    npx nx g @nrwl/react:component Message --export=true --project=ui
-    npx nx g @nrwl/react:storybook-configuration ui --generateStories --no-interactive
   fi
 
   cd ..
