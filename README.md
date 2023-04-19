@@ -4,6 +4,12 @@ Create projects at `/tmp`:
 
 ```shell
 ./create.sh
+
+# or create from "next" version e.g. beta
+./create.sh next
+
+# cleanup
+./clean.sh
 ```
 
 Next.js and React apps will be created with different permutations of options.
